@@ -50,4 +50,8 @@ const (
 const (
 	defaultExchangeName = "dex"
 	storeSubPath        = "store"
+
+	// for db
+	prefixForExchange         = "ex:%s"
+	prefixForExchangeBindedCQ = "exbind:%s:%s"
 )
