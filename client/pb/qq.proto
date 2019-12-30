@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package pb;
+
+
+message PubReq {
+    string  exchange            = 1;
+    string  routingKey          = 2;// should be empty for fanout exchange
+    bytes   data                = 3;
+}
+
+message PubResp {
+    int32   code     = 1;
+    string  msg      = 2;
+}
+
+
+message AckReq {
+    repeated int32 index    = 1;
+}
+
+message AckResp {
+    int32       code     = 1;
+    string      msg      = 2;
+    repeated    QMsg qMsg = 3;
+}
+
+message SubReq {
+    string  queue           = 1;
+    string  group           = 2;
+    int32   prefetchCount   = 3;
+    int32   prefetchBytes   = 4;
+}
+
+message QMsg {
+    string  id      = 1;
+    bytes   data    = 2;
+}
+
+message SubResp {
+    int32       code        = 1;
+    string      msg         = 2;
+    repeated    QMsg qMsg   = 3;
+}
+
+message PushedQMsg {
+    repeated QMsg qMsg = 1;
+}
