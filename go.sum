@@ -124,6 +124,8 @@ github.com/zhiqiangxu/util v0.0.0-20191229112846-49ccd8cead65 h1:JGixq9SKw3e0JCr
 github.com/zhiqiangxu/util v0.0.0-20191229112846-49ccd8cead65/go.mod h1:ybdeTQWwqgpCFu/UkK7jMmZRWzoQJHgIBbbxZq8wtz4=
 github.com/zhiqiangxu/util v0.0.0-20191231064458-a1c22a5a83e9 h1:BY7hHK37hyVJWvU+/osTmloUtQBepokW2Fqwsb8jIg0=
 github.com/zhiqiangxu/util v0.0.0-20191231064458-a1c22a5a83e9/go.mod h1:ybdeTQWwqgpCFu/UkK7jMmZRWzoQJHgIBbbxZq8wtz4=
+github.com/zhiqiangxu/util v0.0.0-20200101071010-2e131228703b h1:scepFduE+ylm+caSOtE7i1oxEZ0bbC1wZROXVOTXBEI=
+github.com/zhiqiangxu/util v0.0.0-20200101071010-2e131228703b/go.mod h1:ybdeTQWwqgpCFu/UkK7jMmZRWzoQJHgIBbbxZq8wtz4=
 go.uber.org/atomic v1.5.0 h1:OI5t8sDa1Or+q8AeE+yKeB/SDYioSHAgcVljj9JIETY=
 go.uber.org/atomic v1.5.0/go.mod h1:sABNBOSYdrvTF6hTgEIbc7YasKWGhgEQZyfxyTvoXHQ=
 go.uber.org/multierr v1.3.0 h1:sFPn2GLc3poCkfrpIXGhBD2X0CMIo4Q/zSULXrj/+uc=
