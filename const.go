@@ -16,6 +16,8 @@ const (
 const (
 	// CodeOK for good
 	CodeOK int32 = iota
+	// CodeBrokerBlockWrite when broker is closing
+	CodeBrokerBlockWrite
 	// CodeUnmarshal for unmarshal error
 	CodeUnmarshal
 	// CodePutCommitLog for commit log Put error
@@ -50,6 +52,8 @@ const (
 const (
 	defaultExchangeName = "dex"
 	storeSubPath        = "store"
+	consumeQueueSubPath = "cq"
+	commitLogSubPath    = "cl"
 
 	// for db
 	prefixForExchange         = "ex:%s"

@@ -32,7 +32,7 @@ func NewConsumeQueue(broker *Broker, name string) (cq *ConsumeQueue) {
 }
 
 func getDirectoryForCQ(dataDir, name string) string {
-	return path.Join(dataDir, name)
+	return path.Join(dataDir, consumeQueueSubPath, name)
 }
 
 // ConsumeQueueCustomDecoder for consume queue

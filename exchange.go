@@ -9,7 +9,7 @@ import (
 )
 
 type exchange interface {
-	Put(offset int64, req pb.PubReq) error
+	Put(offset int64, req *pb.PubReq) error
 	Bind(cq, routingKey string)
 }
 
@@ -18,7 +18,7 @@ var _ exchange = (*Exchange)(nil)
 // Exchange for qq
 type Exchange struct {
 	exType  int32
-	putFunc func(offset int64, req pb.PubReq) error
+	putFunc func(offset int64, req *pb.PubReq) error
 
 	mu sync.RWMutex
 }
@@ -44,19 +44,20 @@ func (ex *Exchange) init() {
 }
 
 // Put to child queue(s)
-func (ex *Exchange) Put(offset int64, req pb.PubReq) error {
+func (ex *Exchange) Put(offset int64, req *pb.PubReq) error {
+	// fmt.Println(req)
 	return ex.putFunc(offset, req)
 }
 
-func (ex *Exchange) putDirect(offset int64, req pb.PubReq) error {
+func (ex *Exchange) putDirect(offset int64, req *pb.PubReq) error {
 	return nil
 }
 
-func (ex *Exchange) putFanout(offset int64, req pb.PubReq) error {
+func (ex *Exchange) putFanout(offset int64, req *pb.PubReq) error {
 	return nil
 }
 
-func (ex *Exchange) putTopic(offset int64, req pb.PubReq) error {
+func (ex *Exchange) putTopic(offset int64, req *pb.PubReq) error {
 	return nil
 }
 

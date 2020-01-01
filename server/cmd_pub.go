@@ -1,6 +1,8 @@
 package server
 
 import (
+	"sync"
+
 	"github.com/zhiqiangxu/qq"
 	"github.com/zhiqiangxu/qq/client/pb"
 	"github.com/zhiqiangxu/qrpc"
@@ -18,11 +20,21 @@ func NewPubCmd(broker *qq.Broker) qrpc.Handler {
 	return &pubCmd{broker: broker}
 }
 
+var pubReqPool = sync.Pool{New: func() interface{} {
+	return &pb.PubReq{}
+}}
+
 func (cmd *pubCmd) ServeQRPC(writer qrpc.FrameWriter, frame *qrpc.RequestFrame) {
 	var (
-		pubReq  pb.PubReq
 		pubResp pb.PubResp
 	)
+
+	pubReq := pubReqPool.Get().(*pb.PubReq)
+	defer func() {
+		*pubReq = pb.PubReq{}
+		pubReqPool.Put(pubReq)
+	}()
+
 	err := pubReq.Unmarshal(frame.Payload)
 	if err != nil {
 		logger.Instance().Error("pubCmd Unmarshal", zap.Error(err))
