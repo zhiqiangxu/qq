@@ -126,6 +126,14 @@ github.com/zhiqiangxu/util v0.0.0-20191231064458-a1c22a5a83e9 h1:BY7hHK37hyVJWvU
 github.com/zhiqiangxu/util v0.0.0-20191231064458-a1c22a5a83e9/go.mod h1:ybdeTQWwqgpCFu/UkK7jMmZRWzoQJHgIBbbxZq8wtz4=
 github.com/zhiqiangxu/util v0.0.0-20200101071010-2e131228703b h1:scepFduE+ylm+caSOtE7i1oxEZ0bbC1wZROXVOTXBEI=
 github.com/zhiqiangxu/util v0.0.0-20200101071010-2e131228703b/go.mod h1:ybdeTQWwqgpCFu/UkK7jMmZRWzoQJHgIBbbxZq8wtz4=
+github.com/zhiqiangxu/util v0.0.0-20200101124022-21af65490856 h1:g6KdPH9M9TtNndhk+NEv7zu4mXdRmXQEWRN7UqYVV0M=
+github.com/zhiqiangxu/util v0.0.0-20200101124022-21af65490856/go.mod h1:ybdeTQWwqgpCFu/UkK7jMmZRWzoQJHgIBbbxZq8wtz4=
+github.com/zhiqiangxu/util v0.0.0-20200101131312-fdd613ed021b h1:mZGcGeJ89ueSKtLwpqX+CoIftltKu+GxCG/TLAsP8FM=
+github.com/zhiqiangxu/util v0.0.0-20200101131312-fdd613ed021b/go.mod h1:ybdeTQWwqgpCFu/UkK7jMmZRWzoQJHgIBbbxZq8wtz4=
+github.com/zhiqiangxu/util v0.0.0-20200102011513-3ab9e7087051 h1:LSusKycgwAX6GWvygjSErMWFF5tKQ4VIp7ibZe66nUs=
+github.com/zhiqiangxu/util v0.0.0-20200102011513-3ab9e7087051/go.mod h1:ybdeTQWwqgpCFu/UkK7jMmZRWzoQJHgIBbbxZq8wtz4=
+github.com/zhiqiangxu/util v0.0.0-20200102034206-1c65fbfe97c4 h1:5YYovVmFakpBi/NS0UlWD7rRgcnCwnXmtz5PCaiPQRY=
+github.com/zhiqiangxu/util v0.0.0-20200102034206-1c65fbfe97c4/go.mod h1:ybdeTQWwqgpCFu/UkK7jMmZRWzoQJHgIBbbxZq8wtz4=
 go.uber.org/atomic v1.5.0 h1:OI5t8sDa1Or+q8AeE+yKeB/SDYioSHAgcVljj9JIETY=
 go.uber.org/atomic v1.5.0/go.mod h1:sABNBOSYdrvTF6hTgEIbc7YasKWGhgEQZyfxyTvoXHQ=
 go.uber.org/multierr v1.3.0 h1:sFPn2GLc3poCkfrpIXGhBD2X0CMIo4Q/zSULXrj/+uc=

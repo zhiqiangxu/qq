@@ -21,12 +21,12 @@ type Broker struct {
 	cl        *CommitLog
 	mm        *MetaManager
 	conf      BrokerConf
-	closer    closer.State
+	closer    *closer.Strict
 }
 
 // NewBroker is ctor for Broker
 func NewBroker(conf BrokerConf) *Broker {
-	b := &Broker{conf: conf}
+	b := &Broker{conf: conf, closer: closer.NewStrict()}
 	b.cl = NewCommitLog(b)
 	b.mm = NewMetaManager(b)
 
@@ -76,6 +76,12 @@ func (b *Broker) Pub(req *pb.PubReq) (resp pb.PubResp) {
 
 // Sub for subscribe
 func (b *Broker) Sub(req pb.SubReq, ci *qrpc.ConnectionInfo) (resp pb.SubResp) {
+	b.closer.Add(1)
+	defer b.closer.Done()
+
+	select {
+	case <-b.closer.ClosedSignal():
+	}
 	return
 }
 
@@ -84,6 +90,8 @@ func (b *Broker) Close() {
 	b.closeOnce.Do(func() {
 
 		b.closer.SignalAndWait()
+		b.cl.Close()
 
+		// close all consume queue
 	})
 }

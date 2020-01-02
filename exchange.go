@@ -21,11 +21,12 @@ type Exchange struct {
 	putFunc func(offset int64, req *pb.PubReq) error
 
 	mu sync.RWMutex
+	mm *MetaManager
 }
 
 // NewExchange is ctor for Exchange
-func NewExchange(exType int32) (ex *Exchange) {
-	ex = &Exchange{exType: exType}
+func NewExchange(exType int32, mm *MetaManager) (ex *Exchange) {
+	ex = &Exchange{exType: exType, mm: mm}
 	ex.init()
 	return
 }
@@ -45,20 +46,23 @@ func (ex *Exchange) init() {
 
 // Put to child queue(s)
 func (ex *Exchange) Put(offset int64, req *pb.PubReq) error {
-	// fmt.Println(req)
 	return ex.putFunc(offset, req)
 }
 
-func (ex *Exchange) putDirect(offset int64, req *pb.PubReq) error {
+func (ex *Exchange) putDirect(offset int64, req *pb.PubReq) (err error) {
+
+	cq := ex.mm.GetOrCreateConsumeQueue(req.RoutingKey)
+	_, err = cq.Put(offset)
+
 	return nil
 }
 
 func (ex *Exchange) putFanout(offset int64, req *pb.PubReq) error {
-	return nil
+	panic("not impl yet")
 }
 
 func (ex *Exchange) putTopic(offset int64, req *pb.PubReq) error {
-	return nil
+	panic("not impl yet")
 }
 
 // Bind consume queue to exchange

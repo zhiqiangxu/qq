@@ -24,8 +24,9 @@ var _ metaManager = (*MetaManager)(nil)
 
 // MetaManager for qq
 type MetaManager struct {
-	exMu   sync.RWMutex
+	mu     sync.RWMutex
 	allEx  map[string]*Exchange
+	allCQ  map[string]*ConsumeQueue
 	store  *Store
 	broker *Broker
 }
@@ -33,7 +34,7 @@ type MetaManager struct {
 // NewMetaManager is ctor for MetaManager
 func NewMetaManager(broker *Broker) (mm *MetaManager) {
 	mm = &MetaManager{allEx: make(map[string]*Exchange), broker: broker}
-	mm.allEx[defaultExchangeName] = NewExchange(ExchangeTypeDirect)
+	mm.allEx[defaultExchangeName] = NewExchange(ExchangeTypeDirect, mm)
 	mm.store = OpenOrCreateStore(broker.conf.DataDir)
 	err := mm.init()
 	if err != nil {
@@ -61,9 +62,9 @@ func (mm *MetaManager) CreateExchange(name string, exType int32) (err error) {
 		return
 	}
 
-	mm.exMu.Lock()
-	mm.allEx[name] = NewExchange(exType)
-	mm.exMu.Unlock()
+	mm.mu.Lock()
+	mm.allEx[name] = NewExchange(exType, mm)
+	mm.mu.Unlock()
 
 	return
 }
@@ -77,17 +78,17 @@ func (mm *MetaManager) DeleteExchange(name string) (err error) {
 		return
 	}
 
-	mm.exMu.Lock()
+	mm.mu.Lock()
 	delete(mm.allEx, name)
-	mm.exMu.Unlock()
+	mm.mu.Unlock()
 	return nil
 }
 
 // GetExchange by name
 func (mm *MetaManager) GetExchange(name string) (ex *Exchange) {
-	mm.exMu.RLock()
+	mm.mu.RLock()
 	ex = mm.allEx[name]
-	mm.exMu.RUnlock()
+	mm.mu.RUnlock()
 	return
 }
 
@@ -109,7 +110,21 @@ func (mm *MetaManager) BindExchangeAndConsumeQueue(ex, cq, routingKey string) (e
 
 // GetOrCreateConsumeQueue will create a ConsumeQueue if not exists
 func (mm *MetaManager) GetOrCreateConsumeQueue(name string) *ConsumeQueue {
-	return nil
+
+	mm.mu.RLock()
+	cq := mm.allCQ[name]
+	mm.mu.RUnlock()
+	if cq == nil {
+		mm.mu.Lock()
+		cq = mm.allCQ[name]
+		if cq == nil {
+			cq = NewConsumeQueue(mm.broker, name)
+			mm.allCQ[name] = cq
+		}
+		mm.mu.Unlock()
+	}
+
+	return cq
 }
 
 // ScanConsumeQueues for iterate over consume queues

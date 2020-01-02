@@ -13,6 +13,7 @@ import (
 
 type consumeQueue interface {
 	Put(offset int64) (int64, error)
+	Close()
 }
 
 var _ consumeQueue = (*ConsumeQueue)(nil)
@@ -66,4 +67,9 @@ func (cq *ConsumeQueue) Put(offset int64) (id int64, err error) {
 
 	id = cqOffset / ConsumeQueueDataSize
 	return
+}
+
+// Close the consume queue
+func (cq *ConsumeQueue) Close() {
+	cq.dq.Close()
 }

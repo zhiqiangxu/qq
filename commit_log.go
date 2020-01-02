@@ -10,6 +10,7 @@ import (
 
 type commitLog interface {
 	Put([]byte) (int64, error)
+	Close()
 }
 
 var _ commitLog = (*CommitLog)(nil)
@@ -39,4 +40,9 @@ func NewCommitLog(broker *Broker) *CommitLog {
 // Put data into diskqueue
 func (cl *CommitLog) Put(data []byte) (offset int64, err error) {
 	return cl.dq.Put(data)
+}
+
+// Close commit log
+func (cl *CommitLog) Close() {
+	cl.dq.Close()
 }
