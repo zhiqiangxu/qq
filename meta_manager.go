@@ -17,6 +17,7 @@ type metaManager interface {
 	GetExchange(name string) *Exchange
 	BindExchangeAndConsumeQueue(ex, cq, routingKey string) error
 	GetOrCreateConsumeQueue(name string) *ConsumeQueue
+	GetAllConsumeQueue() []*ConsumeQueue
 	ScanConsumeQueues(cursor string, limit int) ([]string, error)
 }
 
@@ -125,6 +126,16 @@ func (mm *MetaManager) GetOrCreateConsumeQueue(name string) *ConsumeQueue {
 	}
 
 	return cq
+}
+
+// GetAllConsumeQueue returns all ConsumeQueue
+func (mm *MetaManager) GetAllConsumeQueue() (all []*ConsumeQueue) {
+	mm.mu.RLock()
+	for _, cq := range mm.allCQ {
+		all = append(all, cq)
+	}
+	mm.mu.RUnlock()
+	return
 }
 
 // ScanConsumeQueues for iterate over consume queues

@@ -90,8 +90,16 @@ func (b *Broker) Close() {
 	b.closeOnce.Do(func() {
 
 		b.closer.SignalAndWait()
+
+		// all inflight tasks are done
+
+		// close commit log
 		b.cl.Close()
 
 		// close all consume queue
+		allCQ := b.mm.GetAllConsumeQueue()
+		for _, cq := range allCQ {
+			cq.Close()
+		}
 	})
 }
