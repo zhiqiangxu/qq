@@ -35,7 +35,7 @@ type MetaManager struct {
 // NewMetaManager is ctor for MetaManager
 func NewMetaManager(broker *Broker) (mm *MetaManager) {
 	mm = &MetaManager{allEx: make(map[string]*Exchange), broker: broker}
-	mm.allEx[defaultExchangeName] = NewExchange(ExchangeTypeDirect, mm)
+	mm.allEx[DefaultExchangeName] = NewExchange(ExchangeTypeDirect, mm)
 	mm.store = OpenOrCreateStore(broker.conf.DataDir)
 	err := mm.init()
 	if err != nil {

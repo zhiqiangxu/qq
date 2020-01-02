@@ -50,7 +50,8 @@ const (
 )
 
 const (
-	defaultExchangeName = "dex"
+	// DefaultExchangeName is a Direct exchange
+	DefaultExchangeName = "dex"
 	storeSubPath        = "store"
 	consumeQueueSubPath = "cq"
 	commitLogSubPath    = "cl"
