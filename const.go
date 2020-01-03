@@ -11,6 +11,12 @@ const (
 	CmdSub
 	// CmdSubResp is resp for CmdSub
 	CmdSubResp
+	// CmdData for pushed data
+	CmdData
+	// CmdAck for ack
+	CmdAck
+	// CmdAckResp is resp for CmdAck
+	CmdAckResp
 )
 
 const (

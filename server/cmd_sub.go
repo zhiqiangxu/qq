@@ -35,7 +35,7 @@ func (cmd *subCmd) ServeQRPC(writer qrpc.FrameWriter, frame *qrpc.RequestFrame) 
 		return
 	}
 
-	subResp = cmd.broker.Sub(subReq, frame.ConnectionInfo())
+	subResp = cmd.broker.Sub(&subReq, frame.ConnectionInfo())
 	bytes, _ /*always non nil for pb*/ := subResp.Marshal()
 	err = cmd.WriteRespBytes(writer, frame, qq.CmdSubResp, bytes, 0)
 	if err != nil {

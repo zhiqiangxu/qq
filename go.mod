@@ -8,6 +8,6 @@ require (
 	github.com/gogo/protobuf v1.3.1
 	github.com/oklog/run v1.0.0
 	github.com/zhiqiangxu/qrpc v0.0.0-20191230053101-6e8c32ef6141
-	github.com/zhiqiangxu/util v0.0.0-20200102034206-1c65fbfe97c4
+	github.com/zhiqiangxu/util v0.0.0-20200103035123-5fa018194e5d
 	go.uber.org/zap v1.13.0
 )

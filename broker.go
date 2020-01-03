@@ -11,7 +11,7 @@ import (
 
 type broker interface {
 	Pub(req *pb.PubReq) pb.PubResp
-	Sub(req pb.SubReq, ci *qrpc.ConnectionInfo) pb.SubResp
+	Sub(req *pb.SubReq, ci *qrpc.ConnectionInfo) pb.SubResp
 	Close()
 }
 
@@ -74,8 +74,14 @@ func (b *Broker) Pub(req *pb.PubReq) (resp pb.PubResp) {
 	return
 }
 
+// ConsumeStatus contains info for where to continue for a consumer group
+type ConsumeStatus struct {
+	NextOffset int64 // points to the tip
+	LeftOver   []int64
+}
+
 // Sub for subscribe
-func (b *Broker) Sub(req pb.SubReq, ci *qrpc.ConnectionInfo) (resp pb.SubResp) {
+func (b *Broker) Sub(req *pb.SubReq, ci *qrpc.ConnectionInfo) (resp pb.SubResp) {
 	b.closer.Add(1)
 	defer b.closer.Done()
 
@@ -83,6 +89,10 @@ func (b *Broker) Sub(req pb.SubReq, ci *qrpc.ConnectionInfo) (resp pb.SubResp) {
 	case <-b.closer.ClosedSignal():
 	}
 	return
+}
+
+func (b *Broker) handleSub() {
+
 }
 
 // Close broker

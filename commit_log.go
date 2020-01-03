@@ -10,6 +10,7 @@ import (
 
 type commitLog interface {
 	Put([]byte) (int64, error)
+	StreamOffsetRead(offsetCh <-chan int64) (<-chan diskqueue.StreamBytes, error)
 	Close()
 }
 
@@ -40,6 +41,11 @@ func NewCommitLog(broker *Broker) *CommitLog {
 // Put data into diskqueue
 func (cl *CommitLog) Put(data []byte) (offset int64, err error) {
 	return cl.dq.Put(data)
+}
+
+// StreamOffsetRead for Sub
+func (cl *CommitLog) StreamOffsetRead(offsetCh <-chan int64) (ch <-chan diskqueue.StreamBytes, err error) {
+	return cl.dq.StreamOffsetRead(offsetCh)
 }
 
 // Close commit log
