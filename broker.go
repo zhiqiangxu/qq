@@ -47,7 +47,12 @@ var (
 // Pub for publish
 func (b *Broker) Pub(req *pb.PubReq) (resp pb.PubResp) {
 
-	b.closer.Add(1)
+	err := b.closer.Add(1)
+	if err != nil {
+		resp.Code = CodeClosed
+		resp.Msg = err.Error()
+		return
+	}
 	defer b.closer.Done()
 
 	offset, err := b.cl.Put(req.Data)
@@ -82,7 +87,13 @@ type ConsumeStatus struct {
 
 // Sub for subscribe
 func (b *Broker) Sub(req *pb.SubReq, ci *qrpc.ConnectionInfo) (resp pb.SubResp) {
-	b.closer.Add(1)
+	err := b.closer.Add(1)
+	if err != nil {
+		resp.Code = CodeClosed
+		resp.Msg = err.Error()
+		return
+	}
+
 	defer b.closer.Done()
 
 	select {

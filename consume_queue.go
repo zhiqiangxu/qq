@@ -60,7 +60,10 @@ func (cq *ConsumeQueue) init() {
 
 // Put the commit log offset into consume queue
 func (cq *ConsumeQueue) Put(offset int64) (id int64, err error) {
-	cq.closer.Add(1)
+	err = cq.closer.Add(1)
+	if err != nil {
+		return
+	}
 	defer cq.closer.Done()
 
 	var data [ConsumeQueueDataSize]byte
@@ -79,7 +82,10 @@ func (cq *ConsumeQueue) Put(offset int64) (id int64, err error) {
 // the returned channnel should be shared by all consumers of the same group,
 // caller should cancel ctx when done Sub, otherwise inner G will never quit(didn't check closer for better performance)
 func (cq *ConsumeQueue) Sub(ctx context.Context, status ConsumeStatus) (ch <-chan diskqueue.StreamBytes, err error) {
-	cq.closer.Add(1)
+	err = cq.closer.Add(1)
+	if err != nil {
+		return
+	}
 
 	// start StreamRead with ctx from status.NextOffset
 	cqCh, err := cq.dq.StreamRead(ctx, status.NextOffset)

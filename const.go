@@ -32,6 +32,8 @@ const (
 	CodePutExchange
 	// CodeNoSuchEx when no such exchange
 	CodeNoSuchEx
+	// CodeClosed when service is closed
+	CodeClosed
 )
 
 const (
